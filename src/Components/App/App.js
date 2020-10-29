@@ -9,6 +9,7 @@ class App extends React.Component {
     this.state = {
       inputText: "",
       tasks: [],
+      status: "All",
     };
     this.inputTextHandler = this.inputTextHandler.bind(this);
     this.clickAddBtnHandler = this.clickAddBtnHandler.bind(this);
@@ -16,6 +17,7 @@ class App extends React.Component {
     this.checkBtnHandler = this.checkBtnHandler.bind(this);
     this.filterHandler = this.filterHandler.bind(this);
   }
+
   inputTextHandler(e) {
     let input = e.target.value;
     this.setState({
@@ -54,11 +56,16 @@ class App extends React.Component {
       tasks: tasks,
     });
   }
+
   filterHandler(e) {
-    console.log(e.target.value);
+    // CANT RESOLVE
+    this.setState({
+      status: e.target.value,
+    });
   }
 
   render() {
+    console.log(this.state.status);
     return (
       <div>
         <header className="App">

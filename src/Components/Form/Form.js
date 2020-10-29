@@ -18,8 +18,8 @@ class Form extends Component {
           </button>
           <select className="select" onChange={this.props.select}>
             <option value="All">All</option>
-            <option value="true">Completed</option>
-            <option value="false">Not Completed</option>
+            <option value="completed">Completed</option>
+            <option value="uncompleted">Not Completed</option>
           </select>
         </form>
       </div>
