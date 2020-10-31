@@ -9,13 +9,26 @@ class App extends React.Component {
     this.state = {
       inputText: "",
       tasks: [],
-      status: "All",
+      completedTasks: [],
+      uncompletedTasks: [],
     };
     this.inputTextHandler = this.inputTextHandler.bind(this);
     this.clickAddBtnHandler = this.clickAddBtnHandler.bind(this);
     this.deletBtnHandler = this.deletBtnHandler.bind(this);
     this.checkBtnHandler = this.checkBtnHandler.bind(this);
     this.filterHandler = this.filterHandler.bind(this);
+    this.completedTasks = this.completedTasks.bind(this);
+  }
+
+  completedTasks() {
+    this.setState({
+      completedTasks: this.state.tasks.filter((task) => {
+        return task.completed === true;
+      }),
+      uncompletedTasks: this.state.tasks.filter((task) => {
+        return task.completed === false;
+      }),
+    });
   }
 
   inputTextHandler(e) {
@@ -37,12 +50,25 @@ class App extends React.Component {
         },
       ],
       inputText: "",
+      uncompletedTasks: setTimeout(() => {
+        this.setState({
+          uncompletedTasks: this.state.tasks.filter(
+            (task) => task.completed === false
+          ),
+        });
+      }, 2000),
     });
+    console.log(this.state.uncompletedTasks);
   }
+
   deletBtnHandler(id) {
     let tasks = this.state.tasks;
+    let completedTasks = this.state.completedTasks;
+    let uncompletedTasks = this.state.uncompletedTasks;
     this.setState({
       tasks: tasks.filter((task) => task.id !== id),
+      completedTasks: completedTasks.filter((task) => task.id !== id),
+      uncompletedTasks: uncompletedTasks.filter((task) => task.id !== id),
     });
   }
   checkBtnHandler(id) {
@@ -55,17 +81,36 @@ class App extends React.Component {
     this.setState({
       tasks: tasks,
     });
+    this.completedTasks();
   }
 
   filterHandler(e) {
-    // CANT RESOLVE
-    this.setState({
-      status: e.target.value,
-    });
+    let tasks = this.state.tasks;
+    let completedTasks = this.state.completedTasks;
+    let uncompletedTasks = this.state.uncompletedTasks;
+
+    console.log(tasks);
+    console.log(completedTasks);
+    console.log(uncompletedTasks);
+
+    if (e.target.value === "All") {
+      this.setState({
+        tasks: [...completedTasks, ...uncompletedTasks],
+      });
+    }
+    if (e.target.value === "completed") {
+      this.setState({
+        tasks: [...completedTasks.filter((task) => task.completed === true)],
+      });
+    }
+    if (e.target.value === "uncompleted") {
+      this.setState({
+        tasks: [...uncompletedTasks.filter((task) => task.completed === false)],
+      });
+    }
   }
 
   render() {
-    console.log(this.state.status);
     return (
       <div>
         <header className="App">
