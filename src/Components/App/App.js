@@ -57,8 +57,14 @@ class App extends React.Component {
           ),
         });
       }, 2000),
+      completedTasks: setTimeout(() => {
+        this.setState({
+          completedTasks: this.state.tasks.filter(
+            (task) => task.completed === true
+          ),
+        });
+      }, 2000),
     });
-    console.log(this.state.uncompletedTasks);
   }
 
   deletBtnHandler(id) {
@@ -66,9 +72,9 @@ class App extends React.Component {
     let completedTasks = this.state.completedTasks;
     let uncompletedTasks = this.state.uncompletedTasks;
     this.setState({
-      tasks: tasks.filter((task) => task.id !== id),
-      completedTasks: completedTasks.filter((task) => task.id !== id),
-      uncompletedTasks: uncompletedTasks.filter((task) => task.id !== id),
+      tasks: [...tasks.filter((task) => task.id !== id)],
+      completedTasks: [...completedTasks.filter((task) => task.id !== id)],
+      uncompletedTasks: [...uncompletedTasks.filter((task) => task.id !== id)],
     });
   }
   checkBtnHandler(id) {
